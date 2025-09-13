@@ -9,7 +9,12 @@ import people from './lib/people.json';
     return;
   }
 
-  const tbody = table.querySelector('tbody') || table;
+  let tbody = table.querySelector('tbody');
+
+  if (!tbody) {
+    tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+  }
 
   people.forEach((person) => {
     const tr = document.createElement('tr');
@@ -19,14 +24,9 @@ import people from './lib/people.json';
     tdName.textContent = person.name;
 
     const tdGender = document.createElement('td');
-    const gender =
-      person.gender !== undefined
-        ? person.gender
-        : person.sex === 'm'
-          ? 'Male'
-          : 'Female';
 
-    tdGender.textContent = gender;
+    tdGender.textContent =
+      person.gender ?? (person.sex === 'm' ? 'Male' : 'Female');
 
     const tdBorn = document.createElement('td');
 
